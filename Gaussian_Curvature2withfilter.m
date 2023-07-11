@@ -32,7 +32,7 @@ ylabel('length[mm]')
 zlabel('height[mm]')
 title('Gauss curvature')
 Center= 0.000248 ;
-distrubution= 1*10^-3;  % this changes the resolution of the color bar, if your plot is all 1 color then adjust this value will most likely resolve that
+distrubution= 8*10^-4;  % this changes the resolution of the color bar, if your plot is all 1 color then adjust this value will most likely resolve that
 caxis([Center-distrubution,Center+distrubution]);  %sets mins and maxes for the color bar based on the above inputs
 colorbar
 h = colorbar 
@@ -42,47 +42,72 @@ ylabel(h,'gaussian curvature [mm^-2]')
 
 % Filtering Noise (Max and Mins)
 
-    k1=k;% these 8 lines create and identical series of vertices and the curvature components  
-    x1=x; %then you can specify the upper limit you want your data to be at and the program will remove 
-    y1=y;% values that are greater then your limit
-    z1=z;
-    r1=r;
-    g1=g;
-    b1=b;
-    M=2 %max value
+%     k1=k;% these 8 lines create and identical series of vertices and the curvature components  
+%     x1=x; %then you can specify the upper limit you want your data to be at and the program will remove 
+%     y1=y;% values that are greater then your limit
+%     z1=z;
+%     r1=r;
+%     g1=g;
+%     b1=b;
+%     M=2 %max value
+% 
+%       
+%     x1(k(:) > M) = [];
+%     y1(k(:) > M) = [];
+%     z1(k(:) > M) = [];
+%     k1(k(:) > M) = [];
+% 
+%  b1(k(:) > M) = [];
+%  r1(k(:) > M) = [];
+%   g1(k(:) > M) = [];
+% 
+% 
+% 
+%     N = -2 %min value
+%     x1(k(:) < N) = [];
+%     y1(k(:) < N) = [];
+%     z1(k(:) < N) = [];
+%     k1(k(:) < N) = [];
+%     
+%  b1(k(:) < N) = [];
+%  r1(k(:) < N) = [];
+%   g1(k(:) < N) = [];
+% 
+%   F = [];
+% F(:,1) =  x1;
+% F(:,2) =  y1;
+% F(:,3) =  z1;
+% F(:,4) =  k1;
+% Ffiltered = rmmissing(F);
+% % Graphing filtered data
+% j=1
+% for i = i:length(k)
+%     if k(i) < 2
+%         if k(i) > -2
+%             
+%             k1(j) = k(i);
+%             x1(j) = x(i);
+%             y1(j) = y(i);
+%             z1(j) = z(i);
+%             j = j+1;
+%         end
+%     end
+% 
+%    
+% 
+%     i = i+1;
+% end
 
-      
-    x1(k(:) > M) = [];
-    y1(k(:) > M) = [];
-    z1(k(:) > M) = [];
-    k1(k(:) > M) = [];
-
- b1(k(:) > M) = [];
- r1(k(:) > M) = [];
-  g1(k(:) > M) = [];
 
 
-
-    N = -2 %min value
-    x1(k(:) < N) = [];
-    y1(k(:) < N) = [];
-    z1(k(:) < N) = [];
-    k1(k(:) < N) = [];
-    
- b1(k(:) < N) = [];
- r1(k(:) < N) = [];
-  g1(k(:) < N) = [];
-
-  F = [];
-F(:,1) =  x1;
-F(:,2) =  y1;
-F(:,3) =  z1;
-F(:,4) =  k1;
-Ffiltered = rmmissing(F);
-% Graphing filtered data
+%%
+ k1 = k(k < 2 & k > -2);  logical indexing
+x1 = x(k < 2 & k > -2);
+y1 = y(k < 2 & k > -2);
+z1 = z(k < 2 & k > -2);
 
 figure(4)
-scatter3(Ffiltered(:,1), Ffiltered(:,2),  Ffiltered(:,3), 3,  Ffiltered(:,4), 'filled');
+scatter3(x1, y1,  z1, 3,  k1, 'filled');
 ylabel(h,'gaussian curvature [mm^-2]')
 colorbar;
 caxis([Center-distrubution,Center+distrubution])
@@ -92,18 +117,17 @@ ylabel('length[mm]')
 zlabel('height[mm]')
 
 
+% figure(4)
+% scatter3(Ffiltered(:,1), Ffiltered(:,2),  Ffiltered(:,3), 3,  Ffiltered(:,4), 'filled');
+% ylabel(h,'gaussian curvature [mm^-2]')
+% colorbar;
+% caxis([Center-distrubution,Center+distrubution])
+% title("filtered gaussian curvature")
+% xlabel('width[mm]');
+% ylabel('length[mm]')
+% zlabel('height[mm]')
 
 
-
-%{
-figure(3)
-scatter3(x1, y1, z1, 2, [r1,g1,b1], 'filled');
-title("filtered color map")
-colormap cool
-xlabel('width[mm]');
-ylabel('length[mm]')
-zlabel('height[mm]')
-%}
 
 
    
@@ -113,7 +137,7 @@ prompt = "would you like to find average brushed values of K enter 1 for yes and
 B=input(prompt);
 if B==1
     for i=1:length(x)
-        for j=1:length(brushedData)
+          for j=1:length(brushedData)
             if brushedData(j,1)==x(i)
                 if brushedData(j,2)==y(i)
                     if brushedData(j,3)==z(i)
@@ -144,7 +168,7 @@ end
 
 
   %% Removes values greater than 3 standard deviations away from mean
-  n=1
+  n=3
 
     for i=1:length(K)
         if K2(i)>(Kmean+stdev*n)
