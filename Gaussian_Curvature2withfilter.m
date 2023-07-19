@@ -1,8 +1,7 @@
 %% Importing matrix from Meshlab
- prompt = "what is filename     "
+ prompt1 = "what is filename     "
 
-
-filteredTable = rmmissing(input(prompt));
+filteredTable = rmmissing(input(prompt1));
 A=table2array(filteredTable);
 x=A(:,1);
 y=A(:,2);
@@ -132,6 +131,7 @@ end
   scatter3(Mfiltered(:,1), Mfiltered(:,2), Mfiltered(:,3), 6, Mfiltered(:,4), 'filled');
   figure(7)
   histogram(Mfiltered(:,4))
+  title('5inch simplified 10%')
   meanKfiltered = mean(Mfiltered(:,4))
   %stdevfiltered = std((Mfiltered(:,4)))
   fmin = min(Mfiltered(:,4))
@@ -139,15 +139,15 @@ end
 
 %% Write to Matrix
 
-
-prompt = "would you like to write to .ply file. type 1 for yes 0 for no   ";
-B=input(prompt);
-if B==1
-M=Mfiltered(:,1:3);
-
-    writematrix(M);
-    type 'M.txt';
-end
-if B==0
-    fprintf("ight     ")
-end
+% 
+% prompt = "would you like to write to .ply file. type 1 for yes 0 for no   ";
+% B=input(prompt);
+% if B==1
+% M=Mfiltered(:,1:3);
+% 
+%     writematrix(M);
+%     type 'M.txt';
+% end
+% if B==0
+%     fprintf("ight     ")
+% end
