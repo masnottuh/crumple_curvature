@@ -31,7 +31,7 @@ ylabel('length[mm]')
 zlabel('height[mm]')
 title('Gauss curvature')
 Center= 0.000248 ;
-distrubution= 2*10^-4;  % this changes the resolution of the color bar, if your plot is all 1 color then adjust this value will most likely resolve that
+distrubution= 5*10^-3;  % this changes the resolution of the color bar, if your plot is all 1 color then adjust this value will most likely resolve that
 caxis([Center-distrubution,Center+distrubution]);  %sets mins and maxes for the color bar based on the above inputs
 colorbar
 h = colorbar 
@@ -131,11 +131,11 @@ end
   scatter3(Mfiltered(:,1), Mfiltered(:,2), Mfiltered(:,3), 6, Mfiltered(:,4), 'filled');
   figure(7)
   histogram(Mfiltered(:,4))
-  title('5inch simplified 10%')
+  title(['spread '])
   meanKfiltered = mean(Mfiltered(:,4))
   %stdevfiltered = std((Mfiltered(:,4)))
-  fmin = min(Mfiltered(:,4))
-  fmax = max(Mfiltered(:,4))
+%   fmin = min(Mfiltered(:,4))
+%   fmax = max(Mfiltered(:,4))
 
 %% Write to Matrix
 
